@@ -180,7 +180,7 @@ const getCourses = async () => {
   });
 };
 
-getCourses();
+// getCourses();
 
 //! Actualizar documentos de la base de datos
 const updateCourse = async (id) => {
@@ -235,4 +235,12 @@ const updateCourse = async (id) => {
   console.log("result", result);
 };
 
-updateCourse("669934d13a29e8eeb949599d");
+// updateCourse("669934d13a29e8eeb949599d");
+
+//! Eliminar registros
+const deleteCourse = async (id) => {
+  const result = await Course.deleteOne({ _id: id });
+  console.log("result", result);
+};
+
+deleteCourse("66996043c187d3c6c12cef57");
