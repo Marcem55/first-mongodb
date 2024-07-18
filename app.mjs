@@ -163,8 +163,8 @@ const getCourses = async () => {
   const courses4 = await Course.find({ name: /.*ana.*/ });
   //   console.log("courses4", courses4);
 
-  //? Paginación
-  //* skip()
+  //! Paginación
+  //* skip() & limit()
   const page = 2;
   const limit = 5;
   const courses5 = await Course.find()
@@ -181,3 +181,58 @@ const getCourses = async () => {
 };
 
 getCourses();
+
+//! Actualizar documentos de la base de datos
+const updateCourse = async (id) => {
+  //? Método 1
+  //   const course = await Course.findById(id);
+  //   if (!course) {
+  //     console.log("The course does not exist.");
+  //     return;
+  //   }
+  //   course.published = false;
+  //   course.author = "Prueba update";
+  //   //   course.set({
+  //   //     published: false,
+  //   //     author: "Prueba update",
+  //   //   });
+  //   const result = await course.save();
+  //   console.log("Curso actualizado", result);
+  //? Método 2 - updateOne --> Responde un objeto con datos sobre si se modificó o no el registro
+  // const result = await Course.updateOne(
+  //   {
+  //     _id: id,
+  //   },
+  //   {
+  //     $set: {
+  //       author: "Marcelo updateando",
+  //       published: true,
+  //     },
+  //   }
+  // );
+
+  // console.log("result", result);
+  /* {
+    acknowledged: true,
+    modifiedCount: 1,
+    upsertedId: null,
+    upsertedCount: 0,
+    matchedCount: 1
+  } */
+
+  //? Método 3 - findByIdAndUpdate --> responde con el registro antes de ser modificado (se usa { new: true } como parametro final para que responda el registro actualizado)
+  const result = await Course.findByIdAndUpdate(
+    id,
+    {
+      $set: {
+        author:
+          "Update con findByIdAndUpdate y new para ver el registro actualizado",
+        price: 22,
+      },
+    },
+    { new: true }
+  );
+  console.log("result", result);
+};
+
+updateCourse("669934d13a29e8eeb949599d");
